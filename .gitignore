@@ -1,0 +1,8 @@
+##Java ignore binaries and jars
+bin/
+jars/
+
+# Package Files #
+*.jar
+*.war
+*.ear
