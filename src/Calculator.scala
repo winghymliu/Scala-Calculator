@@ -1,8 +1,12 @@
 import scala.collection.immutable.Stack
 
 sealed abstract trait Input
-case class Num(a: Double ) extends Input
-case class Plus() extends Input
+case class Num(a: Double) extends Input {
+  override def toString() = a.toString
+}
+case class Plus() extends Input {
+  override def toString() = "+"
+}
 
 class Calculator {
 	
