@@ -9,29 +9,24 @@ case class Plus() extends Input {
 }
 
 class Calculator {
-	
-	def calculate(inputs : List[Input]) = {
-		val stack = new Stack[Double]();
-		eval(stack, inputs)
-	}
-	
-	def eval(stack: Stack[Double], inputs: List[Input]) : Double ={
-	  inputs match
-	  {
-	    case Nil => 
-	      stack.head
-	  	case Num(x) :: xs => 
-	  	  eval(stack.push(x), xs)
-	  	case Plus() :: xs =>
-	  	  eval(addition(stack), xs)
-	  	case _ => throw new Exception() 
-	  }
-	}
-	
-	def addition(stack:Stack[Double]) : Stack[Double] ={
-		val (left, newStack1) = stack.pop2
-	    val (right, newStack2) = newStack1.pop2
-	    val res = left + right
-	    newStack2.push(res)
-	} 
+
+  def calculate(expr: Stack[Input]): Double = {
+    def evalSubExpr(expr: Stack[Input]): (Double, Stack[Input]) = {
+      expr.top match {
+        case Num(n) =>
+          (n, expr.pop)
+        case Plus() =>
+          val input2 = evalSubExpr(expr.pop)
+          val input1 = evalSubExpr(input2._2)
+          (input1._1 + input2._1, input1._2)
+      }
+    }
+    if (expr.isEmpty)
+      0.0
+    else {
+      val res = evalSubExpr(expr)
+      require(res._2.isEmpty)
+      res._1
+    }
+  }
 }
