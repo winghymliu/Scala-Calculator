@@ -3,10 +3,15 @@ import org.scalatest._
 class CalculatorTests extends FlatSpec with Matchers {
   val calculator = new Calculator
   
+  "A calculator" should "just return 0.0 from an empty expression" in {
+	  val result = calculator.calculate(List())
+	  result should be (0.0)
+  }
+  
   "A calculator" should "just return a single number from a single number input" in {
       val input = List(Num(1.0)) 
 	  val result = calculator.calculate(input)
-	  result should be (Num(1.0))
+	  result should be (1.0)
   }
   /*
   it should "be able to add two postive numbers" in {
