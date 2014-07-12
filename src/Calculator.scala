@@ -10,13 +10,13 @@ case class Plus() extends Input {
 
 class Calculator {
 
-  def calculate(expr: Stack[Input]): Double = {
-    def evalSubExpr(expr: Stack[Input]): (Double, Stack[Input]) = {
-      expr.top match {
+  def calculate(expr: List[Input]): Double = {
+    def evalSubExpr(expr: List[Input]): (Double, List[Input]) = {
+      expr.last match {
         case Num(n) =>
-          (n, expr.pop)
+          (n, expr.init)
         case Plus() =>
-          val input2 = evalSubExpr(expr.pop)
+          val input2 = evalSubExpr(expr.init)
           val input1 = evalSubExpr(input2._2)
           (input1._1 + input2._1, input1._2)
       }
