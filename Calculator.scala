@@ -6,24 +6,36 @@ case class Plus() extends Input
 class Calculator {
 	
 	def calculate(inputs : List[Input]) = {
-		val list = Nil;
-		eval(list, inputs)
+		eval(inputs)
 	}
 	
-	def eval(list: List[Double], inputs: List[Input]) : Double ={
-	  inputs match
+	def eval(inputs: List[Input]) : Double ={
+	  inputs.last match
 	  {
-	    case Nil => 
-	      list.head
-	  	case Num(x) :: xs => 
-	  	  eval(list.+:(x), xs)
-	  	case Plus() :: xs =>
-	  	  eval(addition(list), xs)
+	  	case Num(x) => 
+	  	  x
+	  	case Plus() =>
+	  	  eval(addition(inputs.init))
 	  	case _ => throw new Exception() 
 	  }
 	}
 	
-	def addition(list:List[Double]) : List[Double] ={
-		List(list.foldRight(0.0)((sum,value) => sum + value));
+	def addition(list:List[Input]) : List[Input] =
+	{	
+		val added = list.foldLeft(0.0)((sum,value) => sum + getNumber(value))
+		List(Num(added));
 	} 
+	
+	def getNumber(input:Input) : Double =
+	{
+	 input match
+	 {
+	   case Num(x) => x
+	   case _ => throw new Exception
+	 }
+	}
+	
+	
+	
+	
 }

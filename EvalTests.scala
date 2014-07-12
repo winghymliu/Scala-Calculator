@@ -6,7 +6,7 @@ class EvalTests extends FlatSpec with Matchers {
 	  val calculator = new Calculator()
 	  val inputs = List(Num(1.0))
 	  val list = Nil
-	  val result = calculator.eval(list, inputs)
+	  val result = calculator.eval(inputs)
 	  
 	  result should be (1.0)
 	}
@@ -14,13 +14,13 @@ class EvalTests extends FlatSpec with Matchers {
 	"Addition with two Nums, x and y" should "return x + y" in {
 	  val calculator = new Calculator()
 	  
-	  val x = 1.0
-	  val y = 2.0
-	  val list = List[Double](x,y)
+	  val x = Num(1.0)
+	  val y = Num(2.0)
+	  val list = List[Input](x,y)
 	  
 	  val resultList = calculator.addition(list);
 	  val additionResult = resultList(0)
 	  
-	  additionResult should be (3.0)
+	  additionResult should be (Num(3.0))
 	}
 }
