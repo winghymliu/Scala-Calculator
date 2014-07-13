@@ -2,10 +2,10 @@ import scala.collection.immutable.Stack
 
 sealed abstract trait Input
 case class Num(a: Double) extends Input {
-  override def toString() = a.toString
+  override def toString = a.toString
 }
-case class Plus() extends Input {
-  override def toString() = "+"
+case object Plus extends Input {
+  override def toString = "+"
 }
 
 class Calculator {
@@ -22,7 +22,7 @@ class Calculator {
 	      stack.head
 	  	case Num(x) :: xs => 
 	  	  eval(stack.push(x), xs)
-	  	case Plus() :: xs =>
+	  	case Plus :: xs =>
 	  	  eval(addition(stack), xs)
 	  	case _ => throw new Exception() 
 	  }
