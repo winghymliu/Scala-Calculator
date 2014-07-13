@@ -6,3 +6,10 @@ jars/
 *.jar
 *.war
 *.ear
+
+# IDE files
+.cache
+.classpath
+.project
+.settings/
+.worksheet/

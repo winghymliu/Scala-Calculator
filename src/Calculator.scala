@@ -2,10 +2,10 @@ import scala.collection.immutable.Stack
 
 sealed abstract trait Input
 case class Num(a: Double) extends Input {
-  override def toString() = a.toString
+  override def toString = a.toString
 }
-case class Plus() extends Input {
-  override def toString() = "+"
+case object Plus extends Input {
+  override def toString = "+"
 }
 
 class Calculator {
@@ -15,7 +15,7 @@ class Calculator {
       expr.last match {
         case Num(n) =>
           (n, expr.init)
-        case Plus() =>
+        case Plus =>
           val input2 = evalSubExpr(expr.init)
           val input1 = evalSubExpr(input2._2)
           (input1._1 + input2._1, input1._2)
@@ -29,4 +29,5 @@ class Calculator {
       res._1
     }
   }
+
 }
