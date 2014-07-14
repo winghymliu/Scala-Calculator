@@ -18,6 +18,12 @@ case class Divide() extends Input {
   override def toString() = "/"
 }
 
+/**
+ * @author Hakan Ozbay
+ * 
+ * A simple arithmetic calculator for Reverse Polish Notation. 
+ * This is a tail-recursive solution applied to the input expression 
+ */
 class Calculator {
 
   def calculate(inputs: List[Input]) = {
