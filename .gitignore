@@ -8,3 +8,5 @@ jars/
 *.ear
 /.classpath
 /bin
+/.cache
+/.project
