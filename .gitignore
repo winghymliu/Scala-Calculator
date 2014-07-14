@@ -7,6 +7,9 @@ jars/
 *.war
 *.ear
 
+# Eclipse #
+.metadata/*
+
 # IDE files
 .cache
 .classpath
