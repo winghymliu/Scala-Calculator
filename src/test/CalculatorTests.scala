@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import calculator.Calculator
 import calculator.Num
-import calculator.Plus
+import calculator.Add
 import java.util.NoSuchElementException
 
 /**
@@ -24,42 +24,42 @@ class CalculatorTests extends FlatSpec with Matchers {
   }
 
   it should "throw an argument exception for an expresion that only has an operator " in {
-    val input = List(Plus())
+    val input = List(Add())
     intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
   it should "throw an element exception for any input with the incorrect number of operators and numbers" in {
-    val input = List(Num(1.0), Num(2.0), Plus(), Plus())
+    val input = List(Num(1.0), Num(2.0), Add(), Add())
     intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
   it should "throw an element exception for providing more operators than operands" in {
-    val input = List(Num(1.0), Plus(), Plus())
+    val input = List(Num(1.0), Add(), Add())
     intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
   it should "throw an element exception for any inner expressions that aren't declared correctly" in {
-    val input = List(Plus(), Num(2.0), Plus())
+    val input = List(Add(), Num(2.0), Add())
     intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
   it should "throw an argument exception for invalid expression" in {
-    val input = List(Num(1.0), Plus(), Num(2.0), Plus())
+    val input = List(Num(1.0), Add(), Num(2.0), Add())
     intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
   it should "throw an argument exception for invalid order" in {
-    val input = List(Num(1.0), Plus(), Num(2.0))
+    val input = List(Num(1.0), Add(), Num(2.0))
     intercept[IllegalArgumentException] {
       calculator.calculate(input)
     }

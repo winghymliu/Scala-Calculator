@@ -5,7 +5,7 @@ sealed abstract trait Input
 case class Num(a: Double) extends Input {
   override def toString() = a.toString
 }
-case class Plus() extends Input {
+case class Add() extends Input {
   override def toString() = "+"
 }
 case class Subtract() extends Input {
@@ -37,10 +37,10 @@ class Calculator {
         x
         else
           throw new IllegalArgumentException("Operators must be provided")
-      case Plus() =>
-        addition(inputs.init)
+      case Add() =>
+        add(inputs.init)
       case Subtract() =>
-        subtraction(inputs.init)
+        subtract(inputs.init)
       case Multiply() =>
         multiply(inputs.init)
       case Divide() =>
@@ -48,7 +48,7 @@ class Calculator {
     }
   }
 
-  def addition(list: List[Input]): Double =
+  def add(list: List[Input]): Double =
     {
       list.last match {
         case Num(x) =>
@@ -58,7 +58,7 @@ class Calculator {
       }
     }
 
-  def subtraction(list: List[Input]): Double =
+  def subtract(list: List[Input]): Double =
     {
       list.last match {
         case Num(x) =>

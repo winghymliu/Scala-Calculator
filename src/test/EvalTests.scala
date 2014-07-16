@@ -5,12 +5,12 @@ import org.scalatest.Matchers
 import calculator.Calculator
 import calculator.Input
 import calculator.Num
-import calculator.Plus
+import calculator.Add
 import calculator.Subtract
 import calculator.Multiply
 import calculator.Divide
 import calculator.Subtract
-import calculator.Plus
+import calculator.Add
 
 /**
  * @author Hakan Ozbay
@@ -34,7 +34,7 @@ class EvalTests extends FlatSpec with Matchers {
     val y = Num(2.0)
     val list = List[Input](x, y)
 
-    val result = calculator.addition(list);
+    val result = calculator.add(list);
 
     result should be(3.0)
   }
@@ -46,7 +46,7 @@ class EvalTests extends FlatSpec with Matchers {
     val y = Num(2.0)
     val list = List[Input](x, y)
 
-    val result = calculator.subtraction(list);
+    val result = calculator.subtract(list);
 
     result should be(-1.0)
   }
@@ -58,7 +58,7 @@ class EvalTests extends FlatSpec with Matchers {
       val x = Num(1.0)
       val y = Num(2.0)
       val z = Num(3.0)
-      val list = List[Input](x, y, z, Plus(), Plus())
+      val list = List[Input](x, y, z, Add(), Add())
 
       val result = calculator.eval(list);
 
@@ -72,7 +72,7 @@ class EvalTests extends FlatSpec with Matchers {
       val x = Num(1.0)
       val y = Num(2.0)
       val z = Num(3.0)
-      val list = List[Input](x, y, z, Plus(), Subtract())
+      val list = List[Input](x, y, z, Add(), Subtract())
 
       val result = calculator.eval(list);
 
@@ -86,7 +86,7 @@ class EvalTests extends FlatSpec with Matchers {
       val x = Num(1.0)
       val y = Num(2.0)
       val z = Num(3.0)
-      val list = List[Input](x, y, Plus(), z, Subtract())
+      val list = List[Input](x, y, Add(), z, Subtract())
 
       val result = calculator.eval(list);
 
@@ -102,7 +102,7 @@ class EvalTests extends FlatSpec with Matchers {
 	  val x = Num(2.0)
 	  val y = Num(3.0)
 	  val z = Num(4.0)
-	  val list = List[Input](w,x,y, Multiply(), Subtract(), z, Plus())
+	  val list = List[Input](w,x,y, Multiply(), Subtract(), z, Add())
 	  
 	  val result = calculator.eval(list);
 	  
@@ -120,7 +120,7 @@ class EvalTests extends FlatSpec with Matchers {
       val x = Num(3.0)
       val y = Num(4.0)
       val z = Num(5.0)
-      val list = List[Input](v, w, x, y, z, Plus(), Subtract(), Multiply(), Divide())
+      val list = List[Input](v, w, x, y, z, Add(), Subtract(), Multiply(), Divide())
 
       val result = calculator.eval(list);
 
