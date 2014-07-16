@@ -9,11 +9,13 @@ import calculator.Plus
 import calculator.Subtract
 import calculator.Multiply
 import calculator.Divide
+import calculator.Subtract
+import calculator.Plus
 
 /**
  * @author Hakan Ozbay
  * These tests are 'happy tests' (true positives) to evaluate correct application of the Reverse Polish Notation.
- * Validation/Acceptance tests are defined in the CalculatorTests class 
+ * Validation/Acceptance tests are defined in the CalculatorTests class
  *
  */
 class EvalTests extends FlatSpec with Matchers {
@@ -63,7 +65,7 @@ class EvalTests extends FlatSpec with Matchers {
       result should be(6.0)
     }
 
-  "Addition with two nums and subtraction with one: x,y,z +-" should "return x-y+z" in
+  "Addition with two nums and subtraction with one: x,y,z +-" should "return x-(y+z)" in
     {
       val calculator = new Calculator()
 
@@ -76,20 +78,52 @@ class EvalTests extends FlatSpec with Matchers {
 
       result should be(-4.0)
     }
+
+  "Addition with two nums and subtraction with one in a mixed order: x,y,+,z,-" should "return (x + y) -z" in
+    {
+      val calculator = new Calculator()
+
+      val x = Num(1.0)
+      val y = Num(2.0)
+      val z = Num(3.0)
+      val list = List[Input](x, y, Plus(), z, Subtract())
+
+      val result = calculator.eval(list);
+
+      result should be(0.0)
+
+    }
   
-  "Application of all operators: v,w,x,y,z +-*/" should "return v/(w*(x-(y+z))" in
+  "Multiply with two nums, Add with another and subtract with one in a mixed order: w,x,y,*,-,z,+" should "return (w - (x * y)) + z" in
   {
 	  val calculator = new Calculator()
 	  
-	  val v = Num(-12.0)
-	  val w = Num(2.0)
-	  val x = Num(3.0)
-	  val y = Num(4.0)
-	  val z = Num(5.0)
-	  val list = List[Input](v,w,x, y, z, Plus(), Subtract(),Multiply(),Divide())
+	  val w = Num(1.0)
+	  val x = Num(2.0)
+	  val y = Num(3.0)
+	  val z = Num(4.0)
+	  val list = List[Input](w,x,y, Multiply(), Subtract(), z, Plus())
 	  
 	  val result = calculator.eval(list);
 	  
-	  result should be(1.0)
+	  result should be(-1.0)
+	  
   }
+  
+
+  "Application of all operators: v,w,x,y,z +-*/" should "return v/(w*(x-(y+z))" in
+    {
+      val calculator = new Calculator()
+
+      val v = Num(-12.0)
+      val w = Num(2.0)
+      val x = Num(3.0)
+      val y = Num(4.0)
+      val z = Num(5.0)
+      val list = List[Input](v, w, x, y, z, Plus(), Subtract(), Multiply(), Divide())
+
+      val result = calculator.eval(list);
+
+      result should be(1.0)
+    }
 }

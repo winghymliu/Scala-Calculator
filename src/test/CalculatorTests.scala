@@ -9,10 +9,10 @@ import java.util.NoSuchElementException
 
 /**
  * @author Hakan Ozbay
- * 
- * Validation/Acceptance tests for ensuring correct behaviour 
- * based on the expression formats, inputs and number of operators vs operands 
- * 
+ *
+ * Validation/Acceptance tests for ensuring correct behaviour
+ * based on the expression formats, inputs and number of operators vs operands
+ *
  */
 class CalculatorTests extends FlatSpec with Matchers {
   val calculator = new Calculator
@@ -25,7 +25,7 @@ class CalculatorTests extends FlatSpec with Matchers {
 
   it should "throw an argument exception for an expresion that only has an operator " in {
     val input = List(Plus())
-    intercept[IllegalArgumentException] {
+    intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
@@ -37,36 +37,32 @@ class CalculatorTests extends FlatSpec with Matchers {
     }
   }
 
-  it should "throw an argument exception for providing more operators than operands" in {
+  it should "throw an element exception for providing more operators than operands" in {
     val input = List(Num(1.0), Plus(), Plus())
-    intercept[IllegalArgumentException] {
+    intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
-  it should "throw an argument exception for any inner expressions that aren't declared correctly" in {
+  it should "throw an element exception for any inner expressions that aren't declared correctly" in {
     val input = List(Plus(), Num(2.0), Plus())
-    intercept[IllegalArgumentException] {
+    intercept[NoSuchElementException] {
       calculator.calculate(input)
     }
   }
 
-  /*  
- *  I found the expression declaration format which gives a false positive - i.e. 
- *  these tests passes when it actually shouldn't. Code to be refactored to accomodate this. 
- *   
- *  it should "throw an argument exception for invalid expression" in {
-	  val input = List(Num(1.0), Plus(), Num(2.0), Plus()) 
-			  intercept[IllegalArgumentException]{
-		  calculator.calculate(input)
-	  }
-	  
-	it should "throw an argument exception for invalid order" in {
-	  val input = List(Num(1.0), Plus(), Num(2.0)) 
-	  intercept[IllegalArgumentException]{
-	  calculator.calculate(input)
-	  }
+  it should "throw an argument exception for invalid expression" in {
+    val input = List(Num(1.0), Plus(), Num(2.0), Plus())
+    intercept[NoSuchElementException] {
+      calculator.calculate(input)
+    }
   }
-  } */
+
+  it should "throw an argument exception for invalid order" in {
+    val input = List(Num(1.0), Plus(), Num(2.0))
+    intercept[IllegalArgumentException] {
+      calculator.calculate(input)
+    }
+  }
 
 }

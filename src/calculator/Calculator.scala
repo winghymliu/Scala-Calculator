@@ -20,9 +20,9 @@ case class Divide() extends Input {
 
 /**
  * @author Hakan Ozbay
- * 
- * A simple arithmetic calculator for Reverse Polish Notation. 
- * This is a tail-recursive solution applied to the input expression 
+ *
+ * A simple arithmetic calculator for Reverse Polish Notation.
+ * This is a tail-recursive solution applied to the input expression
  */
 class Calculator {
 
@@ -33,7 +33,10 @@ class Calculator {
   def eval(inputs: List[Input]): Double = {
     inputs.last match {
       case Num(x) =>
+        if (inputs.size == 1)
         x
+        else
+          throw new IllegalArgumentException("Operators must be provided")
       case Plus() =>
         addition(inputs.init)
       case Subtract() =>
@@ -42,47 +45,46 @@ class Calculator {
         multiply(inputs.init)
       case Divide() =>
         divide(inputs.init)
-      case _ => throw new IllegalArgumentException("Operators must be provided")
     }
   }
 
   def addition(list: List[Input]): Double =
     {
-      list match {
-        case Num(x) :: xs =>
-          x + eval(xs)
+      list.last match {
+        case Num(x) =>
+          eval(list.init) + x
         case _ =>
-          throw new IllegalArgumentException("An operand must be provided")
+          eval(list.take(1)) + eval(list.tail)
       }
     }
 
   def subtraction(list: List[Input]): Double =
     {
-      list match {
-        case Num(x) :: xs =>
-          x - eval(xs)
+      list.last match {
+        case Num(x) =>
+          eval(list.init) - x
         case _ =>
-          throw new IllegalArgumentException("An operand must be provided")
+          eval(list.take(1)) - eval(list.tail)
       }
     }
-  
+
   def multiply(list: List[Input]): Double =
     {
-      list match {
-        case Num(x) :: xs =>
-          x * eval(xs)
+      list.last match {
+        case Num(x) =>
+          eval(list.init) * x
         case _ =>
-          throw new IllegalArgumentException("An operand must be provided")
+          eval(list.take(1)) * eval(list.tail)
       }
     }
-  
+
   def divide(list: List[Input]): Double =
     {
-      list match {
-        case Num(x) :: xs =>
-          x / eval(xs)
+      list.last match {
+        case Num(x) =>
+          eval(list.init) / x
         case _ =>
-          throw new IllegalArgumentException("An operand must be provided")
+          eval(list.take(1)) / eval(list.tail)
       }
     }
 
