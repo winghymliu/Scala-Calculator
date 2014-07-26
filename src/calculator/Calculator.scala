@@ -24,9 +24,9 @@ case class Divide() extends Input {
  * A simple arithmetic calculator for Reverse Polish Notation.
  * This is a tail-recursive solution applied to the input expression
  */
-class Calculator {
-
-  def calculate(inputs: List[Input]) = {
+class Calculator() {
+  
+  def calculate(inputs:List[Input]) = {
     eval(inputs)
   }
 
@@ -47,45 +47,22 @@ class Calculator {
         divide(inputs.init)
     }
   }
+  
+  def add(expr:List[Input]) = operator(expr,_+_)
+  def subtract(expr:List[Input]) = operator(expr,_-_)
+  def multiply(expr:List[Input]) = operator(expr,_*_)
+  def divide(expr:List[Input]) = operator(expr,_/_)
 
-  def add(list: List[Input]): Double =
+  
+  def operator (expr: List[Input], function : (Double,Double) => Double): Double = 
+  {
+    expr.last match
     {
-      list.last match {
-        case Num(x) =>
-          eval(list.init) + x
-        case _ =>
-          eval(list.take(1)) + eval(list.tail)
-      }
+       case Num(x) => function(eval(expr.init),x)
+       case _ => function (eval(expr.take(1)), eval(expr.tail))
     }
-
-  def subtract(list: List[Input]): Double =
-    {
-      list.last match {
-        case Num(x) =>
-          eval(list.init) - x
-        case _ =>
-          eval(list.take(1)) - eval(list.tail)
-      }
-    }
-
-  def multiply(list: List[Input]): Double =
-    {
-      list.last match {
-        case Num(x) =>
-          eval(list.init) * x
-        case _ =>
-          eval(list.take(1)) * eval(list.tail)
-      }
-    }
-
-  def divide(list: List[Input]): Double =
-    {
-      list.last match {
-        case Num(x) =>
-          eval(list.init) / x
-        case _ =>
-          eval(list.take(1)) / eval(list.tail)
-      }
-    }
+  }
+  
+  
 
 }
